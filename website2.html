@@ -24,14 +24,15 @@
     // Get the query parameters
     const urlParams = new URLSearchParams(window.location.search);
     const referral = urlParams.get('from');  // Get the "from" query parameter
+    const username = urlParams.get('username');  // Get the "username" query parameter
 
-    if (referral === 'website1') {
-      console.log('Referral is from Website 1!');
+    if (referral === 'website1' && username) {
+      console.log(`User ${username} came from Website 1!`);
 
       // Log the referral in Supabase
       supabase
         .from('referrals')
-        .insert([{ from_first_website: true }])
+        .insert([{ from_first_website: true, username: username }])
         .then(() => {
           console.log('Referral logged as coming from Website 1');
         })
@@ -39,18 +40,8 @@
           console.error('Error logging referral:', error);
         });
     } else {
-      console.log('Referral is NOT from Website 1!');
-
-      // Log if the referral is not from Website 1
-      supabase
-        .from('referrals')
-        .insert([{ from_first_website: false }])
-        .then(() => {
-          console.log('Referral logged as not coming from Website 1');
-        })
-        .catch((error) => {
-          console.error('Error logging referral:', error);
-        });
+      // If the user didn't come from Website 1 or there's no username, redirect back to Website 1
+      window.location.href = '/christmasplanner/';  // Redirect to Website 1 (index.html)
     }
   </script>
 </body>
