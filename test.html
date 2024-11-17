@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <script>
+    // Function to send the referer to Supabase
+    async function logReferer() {
+      // Get the referer from the document object
+      const referer = document.referrer || 'No referer';
+
+      // Supabase API URL and Key
+      const SUPABASE_URL = 'https://bxolcjhxlttrdbdipopa.supabase.co';  // Replace with your Supabase URL
+      const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ4b2xjamh4bHR0cmRiZGlwb3BhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjk0MzczNjgsImV4cCI6MjA0NTAxMzM2OH0.CpEyTjh0Td7Sts9t5LY8FUNR9cgiH0wPp5iTzNwIbGc';  // Replace with your Supabase public API key
+
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/referer_logs`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'Prefer': 'return=representation',
+        },
+        body: JSON.stringify({
+          referer: referer,
+        }),
+      });
+
+      if (response.ok) {
+        console.log('Referer logged successfully');
+      } else {
+        console.error('Failed to log referer');
+      }
+    }
+
+    // Immediately log the referer when the page loads
+    logReferer();
+  </script>
+</html>
