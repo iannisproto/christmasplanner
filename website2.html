@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website 2</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to Website 2</h1>
+
+  <script>
+    const supabaseUrl = 'https://bxolcjhxlttrdbdipopa.supabase.co';  // Replace with your Supabase URL
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ4b2xjamh4bHR0cmRiZGlwb3BhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjk0MzczNjgsImV4cCI6MjA0NTAxMzM2OH0.CpEyTjh0Td7Sts9t5LY8FUNR9cgiH0wPp5iTzNwIbGc';  // Replace with your Supabase anon key
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    // Get the referrer and log it
+    const referrer = document.referrer;
+    console.log('Document referrer:', referrer);
+
+    // Check if the referrer is from Website 1 (hosted on GitHub Pages)
+    if (referrer.includes('https://iannisproto.github.io/website1/')) {  // Replace with actual URL of Website 1
+      console.log('Referral is from Website 1!');
+      
+      // Log the referral from Website 1
+      supabase
+        .from('referrals')
+        .insert([{ from_first_website: true }])
+        .then(() => {
+          console.log('Referral logged as coming from Website 1');
+        })
+        .catch((error) => {
+          console.error('Error logging referral:', error);
+        });
+    } else {
+      console.log('Referral is NOT from Website 1!');
+      
+      // Log if the referral is not from Website 1
+      supabase
+        .from('referrals')
+        .insert([{ from_first_website: false }])
+        .then(() => {
+          console.log('Referral logged as not coming from Website 1');
+        })
+        .catch((error) => {
+          console.error('Error logging referral:', error);
+        });
+    }
+  </script>
+</body>
+</html>
