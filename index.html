@@ -20,6 +20,7 @@
 </head>
 <body>
   <h1>Welcome to Website 1</h1>
+  <input type="text" id="username" placeholder="Enter your username" />
   <button id="redirectButton">Go to Website 2</button>
 
   <script>
@@ -28,13 +29,20 @@
     const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
     document.getElementById('redirectButton').addEventListener('click', async () => {
-      // Log the referral in Supabase
+      const username = document.getElementById('username').value;
+
+      if (!username) {
+        alert('Please enter a username!');
+        return;
+      }
+
+      // Log the referral and username in Supabase
       await supabase
         .from('referrals')
-        .insert([{ from_first_website: true }]);
+        .insert([{ from_first_website: true, username: username }]);
 
-      // Redirect to Website 2, passing a query parameter to track the referral
-      window.location.href = '/christmasplanner/website2/?from=website1';  // Pass the referral info
+      // Redirect to Website 2, passing the username and referral info
+      window.location.href = `/christmasplanner/website2/?from=website1&username=${encodeURIComponent(username)}`;
     });
   </script>
 </body>
