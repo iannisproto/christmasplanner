@@ -21,12 +21,12 @@
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ4b2xjamh4bHR0cmRiZGlwb3BhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjk0MzczNjgsImV4cCI6MjA0NTAxMzM2OH0.CpEyTjh0Td7Sts9t5LY8FUNR9cgiH0wPp5iTzNwIbGc';  // Replace with your Supabase anon key
     const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-    // Get the referrer and log it
+    // Get the referrer (i.e., where the user came from)
     const referrer = document.referrer;
     console.log('Document referrer:', referrer);
 
-    // Check if the referrer is from Website 1 (hosted on GitHub Pages)
-    if (referrer.includes('https://iannisproto.github.io/christmasplanner/')) {  // Replace with actual URL of Website 1
+    // Check if the referrer is from Website 1 (which is hosted at https://username.github.io/christmasplanner/)
+    if (referrer.includes('https://username.github.io/christmasplanner/')) {  // Adjust URL to your actual GitHub Pages URL
       console.log('Referral is from Website 1!');
       
       // Log the referral from Website 1
