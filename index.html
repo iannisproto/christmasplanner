@@ -23,8 +23,8 @@
   <button id="redirectButton">Go to Website 2</button>
 
   <script>
-    const supabaseUrl = 'https://bxolcjhxlttrdbdipopa.supabase.co';  // Replace with your Supabase URL
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ4b2xjamh4bHR0cmRiZGlwb3BhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjk0MzczNjgsImV4cCI6MjA0NTAxMzM2OH0.CpEyTjh0Td7Sts9t5LY8FUNR9cgiH0wPp5iTzNwIbGc';  // Replace with your Supabase anon key
+    const supabaseUrl = 'https://bxolcjhxlttrdbdipopa.supabase.co';  // Your Supabase URL
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ4b2xjamh4bHR0cmRiZGlwb3BhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjk0MzczNjgsImV4cCI6MjA0NTAxMzM2OH0.CpEyTjh0Td7Sts9t5LY8FUNR9cgiH0wPp5iTzNwIbGc';  // Your Supabase anon key
     const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
     document.getElementById('redirectButton').addEventListener('click', async () => {
@@ -33,8 +33,8 @@
         .from('referrals')
         .insert([{ from_first_website: true }]);
 
-      // Redirect to Website 2, which is now in the /website2 folder
-      window.location.href = '/christmasplanner/website2';  // This points to the /website2 path on GitHub Pages
+      // Redirect to Website 2, passing a query parameter to track the referral
+      window.location.href = '/christmasplanner/website2/?from=website1';  // Pass the referral info
     });
   </script>
 </body>
