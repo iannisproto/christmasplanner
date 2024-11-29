@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Glassmorphism Login Form</title>  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.16.0/dist/umd/supabase.min.js"></script>
+  <link rel="stylesheet" href="login.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+<body>
+    <form id="login-form" onsubmit="login(event)">
+        <h3>Enter your code</h3>
+        <input type="password" id="code" placeholder="Code">
+        <button type="submit">Login</button>
+    </form>
+
+<script>
+    let supabase;
+    let validCodes = [];
+
+    function initializeSupabase() {
+        const supabaseUrl = 'https://bxolcjhxlttrdbdipopa.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ4b2xjamh4bHR0cmRiZGlwb3BhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjk0MzczNjgsImV4cCI6MjA0NTAxMzM2OH0.CpEyTjh0Td7Sts9t5LY8FUNR9cgiH0wPp5iTzNwIbGc';
+
+        supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        fetchValidCodes();
+    }
+
+    async function fetchValidCodes() {
+        try {
+            const { data, error } = await supabase.from('users').select('code, name');
+            
+            if (error) throw error;
+
+            validCodes = data.map(user => ({ code: user.code, name: user.name }));
+        } catch (error) {
+            console.error('Error fetching valid codes:', error);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        initializeSupabase();
+    });
+
+    async function login(event) {
+        event.preventDefault();
+
+        if (!supabase) {
+            console.error('Supabase client is not initialized');
+            return;
+        }
+
+        const code = document.getElementById('code');
+        const inputField = code;
+
+        if (inputField.value.trim() === '') {
+            inputField.classList.add('input-error');
+            setTimeout(() => {
+                inputField.classList.remove('input-error');
+            }, 500);
+            return;
+        }
+
+        const user = validCodes.find(user => user.code === inputField.value);
+
+        if (!user) {
+            inputField.classList.add('input-error');
+            setTimeout(() => {
+                inputField.classList.remove('input-error');
+            }, 500);
+            return;
+        }
+
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('username', user.name);
+
+        window.location.href = 'index.html';
+    }
+</script>
+
+</body>
+</html>
